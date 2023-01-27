@@ -157,7 +157,7 @@ bool isValidInt(char a[100]){
 
 
 bool isValidFloat(const string& s, float& f) {
-  std::istringstream iss(s);
+  istringstream iss(s);
   iss >> noskipws >> f; // noskipws considers leading whitespace invalid
   // Check the entire string was consumed and if either failbit or badbit is set
   return iss.eof() && !iss.fail(); 
