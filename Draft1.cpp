@@ -161,7 +161,7 @@ bool isValidFloat(const string& s, float& f) {
   iss >> noskipws >> f; // noskipws considers leading whitespace invalid
   // Check the entire string was consumed and if either failbit or badbit is set
   return iss.eof() && !iss.fail(); 
-} 
+} // https://cplusplus.com/reference/ios/noskipws/
 
 
 // insert function
