@@ -9,7 +9,6 @@
 #include <cstring>
 
 
-
 // structure creation
 struct Product {
   std::string name;
