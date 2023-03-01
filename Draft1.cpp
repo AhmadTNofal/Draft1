@@ -176,7 +176,7 @@ int Insert() {
   std::cout << "Enter the expiration date (dd/mm/yyyy): ";
   std::cin >> product.expiry_date;
 
-  //if statment for product expiry date
+  //if statement for product expiry date
   do{
   if (!isValidDate(product.expiry_date)) {
     std::cout << "Error: Invalid expiration date input the date again in the correct format (dd/mm/yyyy): " << std::endl;
@@ -355,7 +355,7 @@ int Edit() {
   std::cout << "Enter the expiration date (dd/mm/yyyy): ";
   std::cin >> product.expiry_date;
 
-  //if statment for product expiry date
+  //if statement for product expiry date
   do{
   if (!isValidDate(product.expiry_date)) {
     std::cout << "Error: Invalid expiration date input the date again in the correct format (dd/mm/yyyy): " << std::endl;
@@ -548,7 +548,7 @@ int main() {
     std::cin >> functionNumChar;
     std::cout << "\n";
 
-    // function if-statment
+    // function if-statement
     if (isValidInt(functionNumChar) == true){
 
       functionNum = std::stoi(functionNumChar);
