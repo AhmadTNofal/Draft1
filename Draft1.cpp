@@ -8,39 +8,39 @@
 #include <vector>
 #include <cstring>
 
-using namespace std;
+
 
 // structure creation
 struct Product {
-  string name;
-  string expiry_date;
+  std::string name;
+  std::string expiry_date;
   int quantity;
   float price;
-  string type;
+  std::string type;
 };
 
 // function to printout file
 int printout() {
 
   // Open the text file
-  ifstream infile("Draft1.txt");
+  std::ifstream infile("Draft1.txt");
 
   // Check if the file was successfully opened
   if (!infile) {
-    cerr << "Error: unable to open file" << endl;
+    std::cerr << "Error: unable to open file" << std::endl;
     return 1;
   }
 
   // Read all the lines from the file
-  string line;
-  vector<Product> products;
+  std::string line;
+  std::vector<Product> products;
 
   while (getline(infile, line)) {
 
     // Split the line into a list of items
-    stringstream ss(line);
-    string item;
-    vector<string> items;
+    std::stringstream ss(line);
+    std::string item;
+    std::vector<std::string> items;
     while (getline(ss, item, '\t')) {
       items.push_back(item);
     }
@@ -60,8 +60,8 @@ int printout() {
 
   // Print out the values from the structs in the vector
   for (const auto &p : products) {
-    cout << p.name << " " << p.expiry_date << " " << p.quantity << " "
-         << p.price << " " << p.type << endl;
+    std::cout << p.name << " " << p.expiry_date << " " << p.quantity << " "
+         << p.price << " " << p.type << std::endl;
   }
 
   return 0;
@@ -69,11 +69,11 @@ int printout() {
 
 // delete empty lines
 void delete_empty_line() {
-  fstream file_stream;
-  string current_read_line;
+  std::fstream file_stream;
+  std::string current_read_line;
 
-  file_stream.open("Draft1.txt", fstream::in | fstream::out | fstream::app);
-  vector<string> lines;
+  file_stream.open("Draft1.txt", std::fstream::in | std::fstream::out | std::fstream::app);
+  std::vector<std::string> lines;
 
   // Read all the lines until the end of the file
   while (getline(file_stream, current_read_line)) {
@@ -87,14 +87,14 @@ void delete_empty_line() {
   file_stream.close();
 
   // Write the modified vector of strings back to the text file
-  ofstream output_file("Draft1.txt");
-  for (const string &line : lines) {
+  std::ofstream output_file("Draft1.txt");
+  for (const std::string &line : lines) {
     output_file << line << '\n';
   }
   output_file.close();
 }
 
-bool isValidDate(const string& date) {
+bool isValidDate(const std::string& date) {
   // check if the date is in the correct format (dd/mm/yyyy)
   if (date.length() != 10 || date[2] != '/' || date[5] != '/') {
     return false;
@@ -156,9 +156,9 @@ bool isValidInt(char a[100]){
 }
 
 
-bool isValidFloat(const string& s, float& f) {
-  istringstream iss(s);
-  iss >> noskipws >> f; // noskipws considers leading whitespace invalid
+bool isValidFloat(const std::string& s, float& f) {
+  std::istringstream iss(s);
+  iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
   // Check the entire string was consumed and if either failbit or badbit is set
   return iss.eof() && !iss.fail(); 
 } // https://cplusplus.com/reference/ios/noskipws/
@@ -171,55 +171,56 @@ int Insert() {
   Product product;
 
   // Prompt the user for the data to populate the struct
-  cout << "Enter the product name: ";
-  cin >> product.name;
+  std::cout << "Enter the product name: ";
+  std::cin >> product.name;
 
-  cout << "Enter the expiration date (dd/mm/yyyy): ";
-  cin >> product.expiry_date;
+  std::cout << "Enter the expiration date (dd/mm/yyyy): ";
+  std::cin >> product.expiry_date;
 
   //if statment for product expiry date
   do{
   if (!isValidDate(product.expiry_date)) {
-    cout << "Error: Invalid expiration date input the date again in the correct format (dd/mm/yyyy): " << endl;
-    cin >> product.expiry_date;
+    std::cout << "Error: Invalid expiration date input the date again in the correct format (dd/mm/yyyy): " << std::endl;
+    std::cin >> product.expiry_date;
   }
   } while (!isValidDate(product.expiry_date));
   
-  cout << "Enter the quantity: ";
+  std::cout << "Enter the quantity: ";
   char quantity[100];
-  cin >> quantity;
+  std::cin >> quantity;
 
 do{
   if (isValidInt(quantity) == true){
 
-    product.quantity = stoi(quantity);
+    product.quantity = std::stoi(quantity);
   } else{
 
-    cout << "Error: Invalid quantity input an integer: ";
-    cin >> quantity;
+    std::cout << "Error: Invalid quantity input an integer: ";
+    std::cin >> quantity;
   }
 } while (isValidInt(quantity) == false);
+  product.quantity = std::stoi(quantity);
 
-  cout << "Enter the price: ";
-  string price;
-  cin >> price;
+  std::cout << "Enter the price: ";
+  std::string price;
+  std::cin >> price;
 
 do{
     if (isValidFloat(price,product.price) == true){
       product.price = stof(price);
   }else{
-    cout << "Error: Invalid price input a decimal number or an integer: ";
-    cin >> price;
+    std::cout << "Error: Invalid price input a decimal number or an integer: ";
+    std::cin >> price;
   }  
 } while (isValidFloat(price,product.price) == false);
 
 
-  cout << "Enter the type: ";
-  cin >> product.type;
-  cout << "\n\n";
+  std::cout << "Enter the type: ";
+  std::cin >> product.type;
+  std::cout << "\n\n";
 
   // Open the file in append mode
-  ofstream file("Draft1.txt", ios::app);
+  std::ofstream file("Draft1.txt", std::ios::app);
 
   // Check if the file was opened successfully
   if (file.is_open()) {
@@ -236,7 +237,7 @@ do{
     delete_empty_line();
 
   } else {
-    cout << "Error opening file" << endl;
+    std::cout << "Error opening file" << std::endl;
   }
 
   printout();
@@ -248,12 +249,12 @@ do{
 int Delete() {
 
   // Read the contents of the text file into a vector of Item objects
-  vector<Product> items;
-  ifstream file("Draft1.txt");
-  string line;
+  std::vector<Product> items;
+  std::ifstream file("Draft1.txt");
+  std::string line;
   while (getline(file, line)) {
     Product item;
-    istringstream iss(line);
+    std::istringstream iss(line);
     iss >> item.name >> item.expiry_date >> item.quantity >> item.price >>
         item.type;
     items.push_back(item);
@@ -261,13 +262,13 @@ int Delete() {
   file.close();
 
   // Iterate over the vector of Item objects and delete the desired item
-  string name; // input provided by the user
-  cout << "Write down the name of Item you want to delete: ";
-  cin >> name;
-  string type; // input provided by the user
-  cout << "Write down the type of Item you want to delete: ";
-  cin >> type;
-  cout << "\n\n";
+  std::string name; // input provided by the user
+  std::cout << "Write down the name of Item you want to delete: ";
+  std::cin >> name;
+  std::string type; // input provided by the user
+  std::cout << "Write down the type of Item you want to delete: ";
+  std::cin >> type;
+  std::cout << "\n\n";
 
   bool product_found = false; // flag to track whether the product was found
   for (int i = 0; i < items.size(); i++) {
@@ -280,11 +281,11 @@ int Delete() {
 
   // If the product was not found, print a message to the user
   if (!product_found) {
-    cout << "The product with name '" << name << "' and type '" << type << "' was not found in the file.\n\n" << endl;
+    std::cout << "The product with name '" << name << "' and type '" << type << "' was not found in the file.\n\n" << std::endl;
   }
 
   // Write the modified vector of Item objects back to the text file
-  ofstream output_file("Draft1.txt");
+  std::ofstream output_file("Draft1.txt");
   for (const Product &item : items) {
     output_file << item.name << '\t' << item.expiry_date << '\t'
                 << item.quantity << '\t' << item.price << '\t' << item.type
@@ -301,12 +302,12 @@ int Delete() {
 int Edit() {
 
   // Read the contents of the text file into a vector of Item objects
-  vector<Product> items;
-  ifstream file("Draft1.txt");
-  string line;
+  std::vector<Product> items;
+  std::ifstream file("Draft1.txt");
+  std::string line;
   while (getline(file, line)) {
     Product item;
-    istringstream iss(line);
+    std::istringstream iss(line);
     iss >> item.name >> item.expiry_date >> item.quantity >> item.price >>
         item.type;
     items.push_back(item);
@@ -314,13 +315,13 @@ int Edit() {
   file.close();
 
   // Iterate over the vector of Item objects and delete the desired item
-  string name; // input provided by the user
-  cout << "Write down the name of Item you want to edit: ";
-  cin >> name;
-  string type; // input provided by the user
-  cout << "Write down the type of Item you want to edit: ";
-  cin >> type;
-  cout << "\n\n";
+  std::string name; // input provided by the user
+  std::cout << "Write down the name of Item you want to edit: ";
+  std::cin >> name;
+  std::string type; // input provided by the user
+  std::cout << "Write down the type of Item you want to edit: ";
+  std::cin >> type;
+  std::cout << "\n\n";
 
   bool product_found = false; // flag to track whether the product was found
   for (int i = 0; i < items.size(); i++) {
@@ -333,11 +334,11 @@ int Edit() {
 
   // If the product was not found, print a message to the user
   if (!product_found) {
-    cout << "The product with name '" << name << "' and type '" << type << "' was not found in the file." << endl << "add it as a new item: \n\n";
+    std::cout << "The product with name '" << name << "' and type '" << type << "' was not found in the file." << std::endl << "add it as a new item: \n\n";
   }
 
   // Write the modified vector of Item objects back to the text file
-  ofstream output_file("Draft1.txt");
+  std::ofstream output_file("Draft1.txt");
   for (const Product &item : items) {
     output_file << item.name << '\t' << item.expiry_date << '\t'
                 << item.quantity << '\t' << item.price << '\t' << item.type
@@ -349,55 +350,56 @@ int Edit() {
   Product product;
 
   // Prompt the user for the data to populate the struct
-  cout << "Enter the product name: ";
-  cin >> product.name;
+  std::cout << "Enter the product name: ";
+  std::cin >> product.name;
 
-  cout << "Enter the expiration date (dd/mm/yyyy): ";
-  cin >> product.expiry_date;
+  std::cout << "Enter the expiration date (dd/mm/yyyy): ";
+  std::cin >> product.expiry_date;
 
   //if statment for product expiry date
   do{
   if (!isValidDate(product.expiry_date)) {
-    cout << "Error: Invalid expiration date input the date again in the correct format (dd/mm/yyyy): " << endl;
-    cin >> product.expiry_date;
+    std::cout << "Error: Invalid expiration date input the date again in the correct format (dd/mm/yyyy): " << std::endl;
+    std::cin >> product.expiry_date;
   }
   } while (!isValidDate(product.expiry_date));
   
-  cout << "Enter the quantity: ";
+  std::cout << "Enter the quantity: ";
   char quantity[100];
-  cin >> quantity;
+  std::cin >> quantity;
 
 do{
   if (isValidInt(quantity) == true){
 
-    product.quantity = stoi(quantity);
+    product.quantity = std::stoi(quantity);
   } else{
 
-    cout << "Error: Invalid quantity input an integer: ";
-    cin >> quantity;
+    std::cout << "Error: Invalid quantity input an integer: ";
+    std::cin >> quantity;
   }
 } while (isValidInt(quantity) == false);
+  product.quantity = std::stoi(quantity);
 
-  cout << "Enter the price: ";
-  string price;
-  cin >> price;
+  std::cout << "Enter the price: ";
+  std::string price;
+  std::cin >> price;
 
 do{
     if (isValidFloat(price,product.price) == true){
-      product.price = stof(price);
+      product.price = std::stof(price);
   }else{
-    cout << "Error: Invalid price input a decimal number or an integer: ";
-    cin >> price;
+    std::cout << "Error: Invalid price input a decimal number or an integer: ";
+    std::cin >> price;
   }  
 } while (isValidFloat(price,product.price) == false);
 
 
-  cout << "Enter the type: ";
-  cin >> product.type;
-  cout << "\n\n";
+  std::cout << "Enter the type: ";
+  std::cin >> product.type;
+  std::cout << "\n\n";
 
   // Open the file in append mode
-  ofstream File("Draft1.txt", ios::app);
+  std::ofstream File("Draft1.txt", std::ios::app);
 
   // Check if the file was opened successfully
   if (File.is_open()) {
@@ -414,7 +416,7 @@ do{
     delete_empty_line();
 
   } else {
-    cout << "Error opening file" << endl;
+    std::cout << "Error opening file" << std::endl;
   }
 
   printout();
@@ -422,10 +424,10 @@ do{
   return 0;
 }
 
-vector<string> split(const string &str) {
-  vector<string> words;
-  istringstream iss(str);
-  string word;
+std::vector<std::string> split(const std::string &str) {
+  std::vector<std::string> words;
+  std::istringstream iss(str);
+  std::string word;
   while (iss >> word) {
     words.push_back(word);
   }
@@ -433,29 +435,29 @@ vector<string> split(const string &str) {
 }
 
 //Search Items function
-int SearchItem(const string &name, const string &type) {
+int SearchItem(const std::string &name, const std::string &type) {
 
   // Open the text file in input mode
-  ifstream file("Draft1.txt");
+  std::ifstream file("Draft1.txt");
 
   bool item_found = false; // flag to track whether the item was found
 
   // Read the lines of the file one by one
-  string line;
+  std::string line;
   while (getline(file, line)) {
     // Split the line into a vector of words
-    vector<string> words = split(line);
+    std::vector<std::string> words = split(line);
     // Check if the name and type match the search query
     if (words[0] == name && words[4] == type) {
       item_found = true; // item was found
       // If the name and type match, print the line
-      cout << line << endl;
+      std::cout << line << std::endl;
     }
   }
 
   // If the item was not found, print a message to the user
   if (!item_found) {
-    cout << "The item with name '" << name << "' and type '" << type << "' was not found in the file." << endl;
+    std::cout << "The item with name '" << name << "' and type '" << type << "' was not found in the file." << std::endl;
   }
 
   return 0;
@@ -465,13 +467,13 @@ int SearchItem(const string &name, const string &type) {
 void items_about_to_expire() {
 
   // Open the text file and read its contents line by line
-  ifstream file("Draft1.txt");
-  string line;
+  std::ifstream file("Draft1.txt");
+  std::string line;
   while (getline(file, line)) {
     // Split the line into fields using a stringstream
-    stringstream ss(line);
-    string name;
-    string expirationDate;
+    std::stringstream ss(line);
+    std::string name;
+    std::string expirationDate;
 
     // Get the name and expiration date fields
     getline(ss, name, '\t');
@@ -479,9 +481,9 @@ void items_about_to_expire() {
 
     // Convert the expiration date string into a tm struct
     tm expiration{};
-    istringstream expirationStream(expirationDate);
-    expirationStream.imbue(locale("en_US.utf-8"));
-    expirationStream >> get_time(&expiration, "%m/%d/%Y");
+    std::istringstream expirationStream(expirationDate);
+    expirationStream.imbue(std::locale("en_US.utf-8"));
+    expirationStream >> std::get_time(&expiration, "%m/%d/%Y");
 
     // Get the current date
     time_t currentTime = time(nullptr);
@@ -502,13 +504,13 @@ void items_about_to_expire() {
 //function for items low in stock
 int items_low_in_stock(int threshold) {
 
-  ifstream file("Draft1.txt");
-  string line;
+  std::ifstream file("Draft1.txt");
+  std::string line;
 
   // Read each line of the file
   while (getline(file, line)) {
     // Split the line into fields separated by tabs
-    istringstream fields(line);
+    std::istringstream fields(line);
     Product item;
 
     // Read the fields from the line
@@ -522,7 +524,7 @@ int items_low_in_stock(int threshold) {
 
     // Check if the quantity is below the threshold
     if (item.quantity < threshold) {
-      cout << item.name << " has a low stock of " << item.quantity << endl;
+      std::cout << item.name << " has a low stock of " << item.quantity << std::endl;
     }
   }
   return 0;
@@ -536,7 +538,7 @@ int main() {
     char functionNumChar[100];
   do{
     // printing out the menu
-    cout
+    std::cout
         << "\n\nUsing the following menu to function the database: "
            "\n1.Insert\n2.Delete\n3.Edit\n4.Search item\n5.Show items about to "
            "expire\n6.Show items low in stock\n7.Save and Quit\n\nInput the "
@@ -544,13 +546,13 @@ int main() {
            "function to proceed: ";
 
     // input function number
-    cin >> functionNumChar;
-    cout << "\n";
+    std::cin >> functionNumChar;
+    std::cout << "\n";
 
     // function if-statment
     if (isValidInt(functionNumChar) == true){
 
-      functionNum = stoi(functionNumChar);
+      functionNum = std::stoi(functionNumChar);
 
     if (functionNum == 1) {
 
@@ -566,12 +568,12 @@ int main() {
     } else if (functionNum == 4) {
 
       // input name and type
-      string name, type;
-      cout << "Write down the name of the product you are looking for: ";
-      cin >> name;
-      cout << "Write down the type of the product you are looking for: ";
-      cin >> type;
-      cout << "\n\n";
+      std::string name, type;
+      std::cout << "Write down the name of the product you are looking for: ";
+      std::cin >> name;
+      std::cout << "Write down the type of the product you are looking for: ";
+      std::cin >> type;
+      std::cout << "\n\n";
 
       // running the function
       SearchItem(name, type);
@@ -584,24 +586,24 @@ int main() {
 
       // input the threshold
       int threshold;
-      cout << "Write down the threshold of items to be considered low in stock: ";
+      std::cout << "Write down the threshold of items to be considered low in stock: ";
       char thresholdchar [100];
-      cin >> thresholdchar;
+      std::cin >> thresholdchar;
       
         do{
             if (isValidInt(thresholdchar) == false){
-              cin.clear();
-              cin.ignore();
-              cout << "Error: invalid threshold please input an integer: ";
-              cin >> thresholdchar;
+              std::cin.clear();
+              std::cin.ignore();
+              std::cout << "Error: invalid threshold please input an integer: ";
+              std::cin >> thresholdchar;
             } else {
 
-              threshold = stoi(thresholdchar);
+              threshold = std::stoi(thresholdchar);
 
             }
       } while (isValidInt(thresholdchar) == false);
 
-      cout << "\n\n";
+      std::cout << "\n\n";
       // running the function
       items_low_in_stock(threshold);
 
@@ -611,11 +613,11 @@ int main() {
 
     } else if (functionNum > 7) {
 
-      cout << "Please Write down a number from 1-7 based of the menu printed below"<< endl;
+      std::cout << "Please Write down a number from 1-7 based of the menu printed below"<< std::endl;
 
     }
     } else {
-      cout << "Please Write down a number from 1-7 based of the menu printed below"<< endl;
+      std::cout << "Please Write down a number from 1-7 based of the menu printed below"<< std::endl;
     }
   } while(isValidInt(functionNumChar) == false || true);
 
