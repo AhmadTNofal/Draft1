@@ -22,7 +22,7 @@ struct Product {
 int printout() {
 
   // Open the text file
-  std::ifstream infile("Draft1.txt");
+  std::ifstream infile("Main.txt");
 
   // Check if the file was successfully opened
   if (!infile) {
@@ -71,7 +71,7 @@ void delete_empty_line() {
   std::fstream file_stream;
   std::string current_read_line;
 
-  file_stream.open("Draft1.txt", std::fstream::in | std::fstream::out | std::fstream::app);
+  file_stream.open("Main.txt", std::fstream::in | std::fstream::out | std::fstream::app);
   std::vector<std::string> lines;
 
   // Read all the lines until the end of the file
@@ -86,7 +86,7 @@ void delete_empty_line() {
   file_stream.close();
 
   // Write the modified vector of strings back to the text file
-  std::ofstream output_file("Draft1.txt");
+  std::ofstream output_file("Main.txt");
   for (const std::string &line : lines) {
     output_file << line << '\n';
   }
@@ -219,7 +219,7 @@ do{
   std::cout << "\n\n";
 
   // Open the file in append mode
-  std::ofstream file("Draft1.txt", std::ios::app);
+  std::ofstream file("Main.txt", std::ios::app);
 
   // Check if the file was opened successfully
   if (file.is_open()) {
@@ -249,7 +249,7 @@ int Delete() {
 
   // Read the contents of the text file into a vector of Item objects
   std::vector<Product> items;
-  std::ifstream file("Draft1.txt");
+  std::ifstream file("Main.txt");
   std::string line;
   while (getline(file, line)) {
     Product item;
@@ -284,7 +284,7 @@ int Delete() {
   }
 
   // Write the modified vector of Item objects back to the text file
-  std::ofstream output_file("Draft1.txt");
+  std::ofstream output_file("Main.txt");
   for (const Product &item : items) {
     output_file << item.name << '\t' << item.expiry_date << '\t'
                 << item.quantity << '\t' << item.price << '\t' << item.type
@@ -302,7 +302,7 @@ int Edit() {
 
   // Read the contents of the text file into a vector of Item objects
   std::vector<Product> items;
-  std::ifstream file("Draft1.txt");
+  std::ifstream file("Main.txt");
   std::string line;
   while (getline(file, line)) {
     Product item;
@@ -337,7 +337,7 @@ int Edit() {
   }
 
   // Write the modified vector of Item objects back to the text file
-  std::ofstream output_file("Draft1.txt");
+  std::ofstream output_file("Main.txt");
   for (const Product &item : items) {
     output_file << item.name << '\t' << item.expiry_date << '\t'
                 << item.quantity << '\t' << item.price << '\t' << item.type
@@ -398,7 +398,7 @@ do{
   std::cout << "\n\n";
 
   // Open the file in append mode
-  std::ofstream File("Draft1.txt", std::ios::app);
+  std::ofstream File("Main.txt", std::ios::app);
 
   // Check if the file was opened successfully
   if (File.is_open()) {
@@ -437,7 +437,7 @@ std::vector<std::string> split(const std::string &str) {
 int SearchItem(const std::string &name, const std::string &type) {
 
   // Open the text file in input mode
-  std::ifstream file("Draft1.txt");
+  std::ifstream file("Main.txt");
 
   bool item_found = false; // flag to track whether the item was found
 
@@ -466,7 +466,7 @@ int SearchItem(const std::string &name, const std::string &type) {
 void items_about_to_expire() {
 
   // Open the text file and read its contents line by line
-  std::ifstream file("Draft1.txt");
+  std::ifstream file("Main.txt");
   std::string line;
   while (getline(file, line)) {
     // Split the line into fields using a stringstream
@@ -503,7 +503,7 @@ void items_about_to_expire() {
 //function for items low in stock
 int items_low_in_stock(int threshold) {
 
-  std::ifstream file("Draft1.txt");
+  std::ifstream file("Main.txt");
   std::string line;
 
   // Read each line of the file
