@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <cstring>
+#include <cctype>
 
 
 // structure creation
@@ -18,8 +19,15 @@ struct Product {
   std::string type;
 };
 
-// function to printout file
+
 int printout() {
+/*
+This function is used to printout the database on 
+the screen it is usually used after every function.
+
+inputs: none
+outputs: Prints out the database
+*/
 
   // Open the text file
   std::ifstream infile("Main.txt");
@@ -66,8 +74,16 @@ int printout() {
   return 0;
 }
 
-// delete empty lines
+
 void delete_empty_line() {
+/*
+This function was made to handle the error after deleting an 
+item it leaves an empty line which this function clears all the
+empty lines in the file.
+
+input: none
+output: none
+*/
   std::fstream file_stream;
   std::string current_read_line;
 
@@ -94,6 +110,15 @@ void delete_empty_line() {
 }
 
 bool isValidDate(const std::string& date) {
+/*
+This function was made to handle the date inputs,
+so that the user does not input the wrong type into
+all date related fields.
+
+input: none
+output: none
+*/
+
   // check if the date is in the correct format (dd/mm/yyyy)
   if (date.length() != 10 || date[2] != '/' || date[5] != '/') {
     return false;
@@ -135,6 +160,14 @@ bool isValidDate(const std::string& date) {
 }
 
 bool isValidInt(char a[100]){
+/*
+This function was made to handle the integer inputs,
+so that the user does not input the wrong type into
+all integer related fields.
+
+input: none
+output: none
+*/
 
    bool perfect = true;
     perfect = true;
@@ -156,6 +189,15 @@ bool isValidInt(char a[100]){
 
 
 bool isValidFloat(const std::string& s, float& f) {
+/*
+This function was made to handle the decimal or float inputs,
+so that the user does not input the wrong type into
+all decimal or float related fields.
+
+input: none
+output: none
+*/
+
   std::istringstream iss(s);
   iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
   // Check the entire string was consumed and if either failbit or badbit is set
@@ -163,8 +205,15 @@ bool isValidFloat(const std::string& s, float& f) {
 } // https://cplusplus.com/reference/ios/noskipws/
 
 
-// insert function
+
 int Insert() {
+/*
+This function is made to insert items into the 
+supermarket database(text file).
+
+input: product name/product expiry date/product quantity/product price/product type
+output: saves the inputs into the text file
+*/
 
   // Create an instance of the Product struct
   Product product;
@@ -244,8 +293,15 @@ do{
   return 0;
 }
 
-// delete function
+
 int Delete() {
+/*
+This function is used to delete items
+in the database (text file).
+
+input: product name/product type
+output: deletes an item from the text file
+*/
 
   // Read the contents of the text file into a vector of Item objects
   std::vector<Product> items;
@@ -297,8 +353,16 @@ int Delete() {
   return 0;
 }
 
-//Edit function
+
 int Edit() {
+/*
+This function is used to edit an item that
+already exists and changes the data.
+
+input: product name/product type 
+/product name/product expiration date/product quantity/product price/product type
+output: changes an item in the text file
+*/
 
   // Read the contents of the text file into a vector of Item objects
   std::vector<Product> items;
@@ -424,6 +488,12 @@ do{
 }
 
 std::vector<std::string> split(const std::string &str) {
+/*
+this function is used to split the lines in word segments.
+
+input: none
+output: none
+*/
   std::vector<std::string> words;
   std::istringstream iss(str);
   std::string word;
@@ -435,6 +505,13 @@ std::vector<std::string> split(const std::string &str) {
 
 //Search Items function
 int SearchItem(const std::string &name, const std::string &type) {
+/*
+This function  is used to search for a specific
+product in the database (text file).
+
+input: product name/product type
+output: prints out the item the product you are looking for
+*/
 
   // Open the text file in input mode
   std::ifstream file("Main.txt");
@@ -462,8 +539,15 @@ int SearchItem(const std::string &name, const std::string &type) {
   return 0;
 }
 
-//function for items about to expire
+
 void items_about_to_expire() {
+/*
+This function is used to show the items that
+are about to expire.
+
+input: none
+output: prints out the products about to expire
+*/
 
   // Open the text file and read its contents line by line
   std::ifstream file("Main.txt");
@@ -502,6 +586,13 @@ void items_about_to_expire() {
 
 //function for items low in stock
 int items_low_in_stock(int threshold) {
+/*
+This function is used to show the items that
+are low in stock.
+
+input: threshold
+output: prints out the products that are low in stock
+*/
 
   std::ifstream file("Main.txt");
   std::string line;
@@ -528,6 +619,27 @@ int items_low_in_stock(int threshold) {
   }
   return 0;
 }
+
+// int saveFilteredData() {
+
+//   std::string answer;
+//   std::cout << "Do you want to save your filtered results in an external file (yes/no)? " << std::endl;
+//   std::cin >> answer;
+//   if(tolower(answer) == "yes" ){
+
+
+
+//   }else if (tolower(answer) == "no"){
+
+//      main();
+
+//   } else {
+
+//     std::cout << "please input yes or no: " << std::endl;
+
+//   }
+
+// }
 
 int main() {
 
