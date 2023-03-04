@@ -596,12 +596,12 @@ output: prints out the products that are low in stock
 
   std::ifstream file("Main.txt");
   std::string line;
-
+  Product item;
   // Read each line of the file
   while (getline(file, line)) {
     // Split the line into fields separated by tabs
     std::istringstream fields(line);
-    Product item;
+    
 
     // Read the fields from the line
     getline(fields, item.name, '\t');
@@ -611,7 +611,6 @@ output: prints out the products that are low in stock
     fields >> item.price;
     fields.ignore(1); // ignore the tab character
     getline(fields, item.type);
-
     // Check if the quantity is below the threshold
     if (item.quantity < threshold) {
       std::cout << item.name << " has a low stock of " << item.quantity << std::endl;
