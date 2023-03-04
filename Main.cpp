@@ -618,24 +618,6 @@ output: prints out the products that are low in stock
     }
   }
 
-  // std::string answer;
-  // while(answer != "no" || answer != "yes"){
-  // std::cout << "\nDo you want to save your filtered results in an external file (yes/no)? " << std::endl;
-  // std::cin >> answer;
-  // if(answer == "yes" ){
-
-  //   std::string fileName;
-  //   std::cout << "Name your file: ";
-  //   std::cin >> fileName;
-
-
-  // }else if (answer == "no"){
-
-     
-
-  // } 
-  // }
-
   return 0;
 }
 
