@@ -617,29 +617,27 @@ output: prints out the products that are low in stock
       std::cout << item.name << " has a low stock of " << item.quantity << std::endl;
     }
   }
+
+  // std::string answer;
+  // while(answer != "no" || answer != "yes"){
+  // std::cout << "\nDo you want to save your filtered results in an external file (yes/no)? " << std::endl;
+  // std::cin >> answer;
+  // if(answer == "yes" ){
+
+  //   std::string fileName;
+  //   std::cout << "Name your file: ";
+  //   std::cin >> fileName;
+
+
+  // }else if (answer == "no"){
+
+     
+
+  // } 
+  // }
+
   return 0;
 }
-
-// int saveFilteredData() {
-
-//   std::string answer;
-//   std::cout << "Do you want to save your filtered results in an external file (yes/no)? " << std::endl;
-//   std::cin >> answer;
-//   if(tolower(answer) == "yes" ){
-
-
-
-//   }else if (tolower(answer) == "no"){
-
-//      main();
-
-//   } else {
-
-//     std::cout << "please input yes or no: " << std::endl;
-
-//   }
-
-// }
 
 int main() {
 
