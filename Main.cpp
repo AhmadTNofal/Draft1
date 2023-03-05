@@ -585,7 +585,7 @@ output: prints out the products about to expire
 }
 
 //function for items low in stock
-int items_low_in_stock(int threshold) {
+void items_low_in_stock(int threshold) {
 /*
 This function is used to show the items that
 are low in stock.
@@ -594,31 +594,53 @@ input: threshold
 output: prints out the products that are low in stock
 */
 
-  std::ifstream file("Main.txt");
+    std::ifstream file("Main.txt");
   std::string line;
   Product item;
-  // Read each line of the file
-  while (getline(file, line)) {
-    // Split the line into fields separated by tabs
-    std::istringstream fields(line);
-    
+  std::vector<Product> items_low_stock;
 
-    // Read the fields from the line
+  while (getline(file, line)) {
+    std::istringstream fields(line);
     getline(fields, item.name, '\t');
     getline(fields, item.expiry_date, '\t');
     fields >> item.quantity;
-    fields.ignore(1); // ignore the tab character
+    fields.ignore(1);
     fields >> item.price;
-    fields.ignore(1); // ignore the tab character
+    fields.ignore(1);
     getline(fields, item.type);
-    // Check if the quantity is below the threshold
+
     if (item.quantity < threshold) {
       std::cout << item.name << " has a low stock of " << item.quantity << std::endl;
+      items_low_stock.push_back(item);
     }
   }
 
-  return 0;
+  std::string answer;
+  while (true) {
+    std::cout << "Do you want to save the results in an external file (yes/no)?" << std::endl;
+    std::cin >> answer;
+
+    if (answer == "yes" || answer == "no") {
+      break;
+    } else {
+      std::cout << "Invalid input. Please enter 'yes' or 'no'." << std::endl;
+    }
+  }
+
+  if (answer == "yes") {
+    std::string fileName;
+    std::cout << "What do you want to name your file? (Please end your file name with .txt)" << std::endl;
+    std::cin >> fileName;
+    std::ofstream InputFile(fileName);
+
+    for (Product item : items_low_stock) {
+      InputFile << item.name << "\t" << item.expiry_date << "\t" << item.quantity << "\t" << item.price << "\t" << item.type << std::endl;
+    }
+
+    std::cout << "Results saved in " << fileName << std::endl;
+  }
 }
+
 
 int main() {
 
