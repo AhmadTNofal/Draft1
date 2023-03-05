@@ -629,15 +629,16 @@ output: prints out the products that are low in stock
 
   if (answer == "yes") {
     std::string fileName;
-    std::cout << "What do you want to name your file? (Please end your file name with .txt)" << std::endl;
+    std::cout << "What do you want to name your file?" << std::endl;
     std::cin >> fileName;
-    std::ofstream InputFile(fileName);
+    std::string fileNameText = fileName+".txt";
+    std::ofstream InputFile(fileNameText);
 
     for (Product item : items_low_stock) {
       InputFile << item.name << "\t" << item.expiry_date << "\t" << item.quantity << "\t" << item.price << "\t" << item.type << std::endl;
     }
 
-    std::cout << "Results saved in " << fileName << std::endl;
+    std::cout << "Results saved in " << fileNameText << std::endl;
   }
 }
 
