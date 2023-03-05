@@ -584,7 +584,6 @@ output: prints out the products about to expire
   }
 }
 
-//function for items low in stock
 void items_low_in_stock(int threshold) {
 /*
 This function is used to show the items that
@@ -594,7 +593,7 @@ input: threshold
 output: prints out the products that are low in stock
 */
 
-    std::ifstream file("Main.txt");
+  std::ifstream file("Main.txt");
   std::string line;
   Product item;
   std::vector<Product> items_low_stock;
