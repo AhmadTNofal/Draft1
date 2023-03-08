@@ -550,17 +550,30 @@ output: prints out the products about to expire
 */
 
   // Open the text file and read its contents line by line
+ 
   std::ifstream file("Main.txt");
   std::string line;
+
+  // Store the items about to expire in a vector
+  std::vector<Product> items_about_to_expire;
+
   while (getline(file, line)) {
     // Split the line into fields using a stringstream
     std::stringstream ss(line);
     std::string name;
     std::string expirationDate;
+    int quantity;
+    double price;
+    std::string type;
 
-    // Get the name and expiration date fields
+    // Get the name, expiration date, quantity, price, and type fields
     getline(ss, name, '\t');
     getline(ss, expirationDate, '\t');
+    ss >> quantity;
+    ss.ignore(1, '\t');
+    ss >> price;
+    ss.ignore(1, '\t');
+    getline(ss, type, '\t');
 
     // Convert the expiration date string into a tm struct
     tm expiration{};
@@ -576,11 +589,43 @@ output: prints out the products about to expire
     double daysUntilExpiration =
         difftime(mktime(&expiration), mktime(&currentDate)) / 86400;
 
-    // If the item is about to expire (within 7 days), output its name and
-    // expiration date
+    // If the item is about to expire (within 7 days), add it to the vector
     if (daysUntilExpiration <= 7) {
+      items_about_to_expire.push_back(
+          {name, expirationDate, quantity, price, type});
       std::cout << name << " expires on " << expirationDate << std::endl;
     }
+  }
+
+  // Prompt the user to save the results to an external file
+  std::string answer;
+  while (true) {
+    std::cout << "Do you want to save the items about to expire in an external "
+                 "file (yes/no)?"
+              << std::endl;
+    std::cin >> answer;
+
+    if (answer == "yes" || answer == "no") {
+      break;
+    } else {
+      std::cout << "Invalid input. Please enter 'yes' or 'no'." << std::endl;
+    }
+  }
+
+  if (answer == "yes") {
+    std::string fileName;
+    std::cout << "What do you want to name your file?" << std::endl;
+    std::cin >> fileName;
+    std::string fileNameText = fileName + ".txt";
+    std::ofstream outputFile(fileNameText);
+
+    for (Product item : items_about_to_expire) {
+      outputFile << item.name << "\t" << item.expiry_date << "\t"
+                 << item.quantity << "\t" << item.price << "\t" << item.type
+                 << std::endl;
+    }
+
+    std::cout << "Results saved in " << fileNameText << std::endl;
   }
 }
 
