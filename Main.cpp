@@ -600,7 +600,7 @@ output: prints out the products about to expire
   // Prompt the user to save the results to an external file
   std::string answer;
   while (true) {
-    std::cout << "Do you want to save the items about to expire in an external "
+    std::cout << "\nDo you want to save the items about to expire in an external "
                  "file (yes/no)?"
               << std::endl;
     std::cin >> answer;
@@ -661,7 +661,7 @@ output: prints out the products that are low in stock
 
   std::string answer;
   while (true) {
-    std::cout << "Do you want to save the results in an external file (yes/no)?" << std::endl;
+    std::cout << "\nDo you want to save the results in an external file (yes/no)?" << std::endl;
     std::cin >> answer;
 
     if (answer == "yes" || answer == "no") {
