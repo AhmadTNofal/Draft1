@@ -8,6 +8,7 @@
 #include <vector>
 #include <cstring>
 #include <cctype>
+#include <dirent.h>
 
 
 // structure creation
@@ -685,7 +686,6 @@ output: prints out the products that are low in stock
     std::cout << "Results saved in " << fileNameText << std::endl;
   }
 }
-
 
 int main() {
 
