@@ -8,7 +8,6 @@
 #include <vector>
 #include <cstring>
 #include <cctype>
-#include <dirent.h>
 
 
 // structure creation
@@ -687,6 +686,59 @@ output: prints out the products that are low in stock
   }
 }
 
+int ShowSavedFiles(){
+
+  std::string fileName;
+  std::cout << "Write down the name of the file you want to display: ";
+  std::cin >> fileName;
+  std::cout << "\n";
+  std::string fileNameText = fileName + ".txt";
+
+  // Open the text file
+  std::ifstream infile(fileNameText);
+
+  // Check if the file was successfully opened
+  if (!infile) {
+    std::cerr << "Error: file not found." << std::endl;
+    return 1;
+  }
+
+  // Read all the lines from the file
+  std::string line;
+  std::vector<Product> products;
+
+  while (getline(infile, line)) {
+
+    // Split the line into a list of items
+    std::stringstream ss(line);
+    std::string item;
+    std::vector<std::string> items;
+    while (getline(ss, item, '\t')) {
+      items.push_back(item);
+    }
+
+    // Store the values in a struct and a vector
+    Product product;
+    product.name = items[0];
+    product.expiry_date = items[1];
+    product.quantity = stoi(items[2]);
+    product.price = stof(items[3]);
+    product.type = items[4];
+    products.push_back(product);
+  }
+
+  // Close the file
+  infile.close();
+
+  // Print out the values from the structs in the vector
+  for (const auto &p : products) {
+    std::cout << p.name << " " << p.expiry_date << " " << p.quantity << " "
+         << p.price << " " << p.type << std::endl;
+  }
+
+  return 0;
+}
+
 int main() {
 
   printout();
@@ -698,7 +750,7 @@ int main() {
     std::cout
         << "\n\nUsing the following menu to function the database: "
            "\n1.Insert\n2.Delete\n3.Edit\n4.Search item\n5.Show items about to "
-           "expire\n6.Show items low in stock\n7.Save and Quit\n\nInput the "
+           "expire\n6.Show items low in stock\n7.Show saved files\n8.Save and Quit\n\nInput the "
            "number of the "
            "function to proceed: ";
 
@@ -766,15 +818,19 @@ int main() {
 
     } else if (functionNum == 7) {
 
+      ShowSavedFiles();
+
+    } else if (functionNum == 8){
+
       exit(0);
 
-    } else if (functionNum > 7) {
+    }else if (functionNum > 8) {
 
-      std::cout << "Please Write down a number from 1-7 based of the menu printed below"<< std::endl;
+      std::cout << "Please Write down a number from 1-8 based of the menu printed below"<< std::endl;
 
     }
     } else {
-      std::cout << "Please Write down a number from 1-7 based of the menu printed below"<< std::endl;
+      std::cout << "Please Write down a number from 1-8 based of the menu printed below"<< std::endl;
     }
   } while(isValidInt(functionNumChar) == false || true);
 
